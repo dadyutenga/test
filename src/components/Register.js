@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
-import { login } from '../services/api';
-import { useAuth } from '../context/AuthContext';
-import { useHistory } from 'react-router-dom';
+import { register } from '../services/api';
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login: authLogin } = useAuth();
-  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await login(username, password);
-      authLogin(data);
-      history.push('/'); // Redirect to home page after login
+      const data = await register(username, email, password);
+      console.log('Registration successful', data);
+      // TODO: Handle successful registration (e.g., redirect to login)
     } catch (err) {
-      setError(err.message || 'An error occurred during login');
+      setError(err.message || 'An error occurred during registration');
     }
   };
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Register</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
@@ -37,6 +34,16 @@ const Login = () => {
           />
         </div>
         <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -46,10 +53,10 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;
