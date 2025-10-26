@@ -117,6 +117,149 @@ function FloatingFragments({ color, count = 60 }) {
   );
 }
 
+function HopeHalos({ color, accent }) {
+  const group = useRef();
+
+  useFrame(({ clock }) => {
+    if (group.current) {
+      const t = clock.getElapsedTime() * 0.2;
+      group.current.rotation.y = t;
+      group.current.rotation.x = Math.sin(t * 0.6) * 0.15;
+    }
+  });
+
+  return (
+    <group ref={group}>
+      {[1.1, 1.6, 2.2].map((radius, idx) => (
+        <mesh key={radius} rotation={[Math.PI / 4, 0, 0]}>
+          <torusGeometry args={[radius, 0.03 + idx * 0.03, 64, 100]} />
+          <meshStandardMaterial
+            color={idx === 0 ? accent : color}
+            emissive={idx === 0 ? accent : color}
+            emissiveIntensity={0.4 + idx * 0.15}
+            wireframe={idx === 2}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function FloatingOrbs({ color }) {
+  const configs = useMemo(
+    () =>
+      Array.from({ length: 5 }).map(() => ({
+        basePosition: [
+          (Math.random() - 0.5) * 3,
+          -0.5 + Math.random() * 2.5,
+          (Math.random() - 0.5) * 3,
+        ],
+        radius: 0.2 + Math.random() * 0.2,
+        speed: 0.4 + Math.random() * 0.4,
+        phase: Math.random() * Math.PI * 2,
+      })),
+    []
+  );
+
+  return (
+    <group>
+      {configs.map((orb, idx) => (
+        <Orb key={idx} {...orb} color={color} />
+      ))}
+    </group>
+  );
+}
+
+function Orb({ basePosition, radius, speed, phase, color }) {
+  const ref = useRef();
+
+  useFrame(({ clock }) => {
+    if (!ref.current) return;
+    const t = clock.getElapsedTime() * speed + phase;
+    ref.current.position.x = basePosition[0] + Math.sin(t * 0.8) * 0.5;
+    ref.current.position.y = basePosition[1] + Math.sin(t) * 0.4;
+    ref.current.position.z = basePosition[2] + Math.cos(t * 0.6) * 0.5;
+    ref.current.rotation.y = t;
+  });
+
+  return (
+    <mesh ref={ref} position={basePosition}>
+      <sphereGeometry args={[radius, 32, 32]} />
+      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.6} transparent opacity={0.85} />
+    </mesh>
+  );
+}
+
+function PromiseLantern({ position, color, accent, delay }) {
+  const ref = useRef();
+
+  useFrame(({ clock }) => {
+    if (!ref.current) return;
+    const t = clock.getElapsedTime() * 0.5 + delay;
+    ref.current.position.y = position[1] + Math.sin(t) * 0.5;
+    ref.current.rotation.y = Math.sin(t * 0.8) * 0.4;
+  });
+
+  return (
+    <group ref={ref} position={position}>
+      <mesh>
+        <cylinderGeometry args={[0.15, 0.15, 0.6, 24]} />
+        <meshStandardMaterial color={color} metalness={0.1} roughness={0.4} transparent opacity={0.4} />
+      </mesh>
+      <mesh position={[0, 0.35, 0]}>
+        <sphereGeometry args={[0.12, 24, 24]} />
+        <meshStandardMaterial color={accent} emissive={accent} emissiveIntensity={0.8} />
+      </mesh>
+    </group>
+  );
+}
+
+function PromiseLanterns({ color, accent }) {
+  const positions = useMemo(
+    () =>
+      [
+        [-2, -0.2, -1],
+        [2, -0.3, 1.2],
+        [0.8, 0.1, -2],
+        [-1, 0.3, 2],
+      ].map((pos, idx) => ({ pos, delay: idx * 0.7 })),
+    []
+  );
+
+  return (
+    <group>
+      {positions.map(({ pos, delay }, idx) => (
+        <PromiseLantern key={idx} position={pos} color={color} accent={accent} delay={delay} />
+      ))}
+    </group>
+  );
+}
+
+function ForgivenessRibbon({ color, accent }) {
+  const geometry = useMemo(() => {
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-2, -1, -1),
+      new THREE.Vector3(-1, 0, 0.5),
+      new THREE.Vector3(0, 1, 0),
+      new THREE.Vector3(1.5, 0.2, -0.5),
+      new THREE.Vector3(2.2, -0.6, 1),
+    ]);
+    return new THREE.TubeGeometry(curve, 140, 0.07, 16, false);
+  }, []);
+
+  const colors = useMemo(() => {
+    const base = new THREE.Color(color);
+    const glow = new THREE.Color(accent);
+    return { base, glow };
+  }, [color, accent]);
+
+  return (
+    <mesh geometry={geometry}>
+      <meshStandardMaterial color={colors.base} emissive={colors.glow} emissiveIntensity={0.5} roughness={0.2} />
+    </mesh>
+  );
+}
+
 export function SceneContent({ variant }) {
   const variants = {
     love: {
@@ -159,6 +302,10 @@ export function SceneContent({ variant }) {
       </Float>
       <MemoryStream color={palette.accent} />
       <FloatingFragments color={palette.sparkles} />
+      <HopeHalos color={palette.sparkles} accent={palette.accent} />
+      <FloatingOrbs color={palette.accent} />
+      <PromiseLanterns color={palette.ambient} accent={palette.accent} />
+      <ForgivenessRibbon color={palette.ambient} accent={palette.accent} />
       <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={0.6} />
     </>
   );

@@ -1,33 +1,109 @@
 import { motion } from 'framer-motion';
 import EmotionCanvas from './components/EmotionCanvas.jsx';
 
+function IconHeartOpen(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 21s-5.5-4.26-7.9-8.1C2.3 10.2 3.1 6.5 6.2 6.5c2.2 0 3.2 1.3 3.8 2.4.6-1.1 1.6-2.4 3.8-2.4 3.1 0 3.9 3.7 2.1 6.4C17.5 16.74 12 21 12 21z"
+      />
+    </svg>
+  );
+}
+
+function IconHandsTogether(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M7 11 4 8.2c-.8-.8-.8-2.1 0-2.9.8-.8 2.1-.8 2.9 0l2.4 2.4M17 11l3-2.8c.8-.8.8-2.1 0-2.9s-2.1-.8-2.9 0l-2.4 2.4M9 21l-4-4.5c-.8-.9-.7-2.2.1-3 .8-.7 2-.7 2.7.1L11 19M15 21l4-4.5c.8-.9.7-2.2-.1-3-.8-.7-2-.7-2.7.1L13 19"
+      />
+    </svg>
+  );
+}
+
+function IconOliveBranch(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 20c6-2 10-6 12-12" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M7 7c0 1.7-1.3 3-3 3 0-1.7 1.3-3 3-3Zm5-3c0 1.9 1.6 3.5 3.5 3.5C15.5 5.6 13.9 4 12 4Zm5 6c0 1.7 1.3 3 3 3 0-1.7-1.3-3-3-3Z"
+      />
+    </svg>
+  );
+}
+
+function IconSparkPrayer(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v3m6-3-1.5 2.6M6 3l1.5 2.6M4 11h3m-3 6 2.6-1.5M20 11h-3m3 6-2.6-1.5M12 21v-3" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="m9 14 3-3 3 3v4a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4Z" />
+    </svg>
+  );
+}
+
 const storyBeats = [
   {
-    id: 'love',
-    title: 'Whispers of the First Sunrise',
-    swahili: 'Nilipoiona sura yako, moyo wangu ulipiga ngoma ya furaha.',
-    subtitle: 'Kila tabasamu lako lilikuwa ahadi ya kesho nzuri.',
-    body: `Under the violet skies of Bangkok, we chased neon dreams and quiet sunsets.
-I remember how your laughter painted constellations above us, how every moment felt suspended in golden light.`,
-    variant: 'love',
-  },
-  {
-    id: 'regret',
-    title: 'Echoes in the Space Between Us',
-    swahili: 'Samahani, moyo wangu uliharibika kwa ukimya niliokupa.',
-    subtitle: 'Nilipotea kwenye kivuli cha hofu yangu na nikakuacha ukisubiri mwanga.',
-    body: `I let distance bloom between our hands. Words I never said weighed heavier than any storm.
-The city kept moving while I stood still, rehearsing apologies in every passing reflection.`,
+    id: 'kukiri',
+    title: 'Najua Nilikosea',
+    swahili: 'Najua niko vibaya, na moyo wangu unakiri hili bila kujitetea.',
+    subtitle: 'Kila neno la ukimya lililokuumiza sasa linasikika ndani yangu kama mlio wa farasi.',
+    body: `Nilijificha nyuma ya woga badala ya kushika mkono wako. Nilipuuzia machozi yako ya kimya,
+na sasa ninatembea hatua kwa hatua kuelekea ukweli: nilikuacha peke yako wakati ulihitaji bega langu.`,
     variant: 'regret',
+    icon: IconHeartOpen,
   },
   {
-    id: 'forgiveness',
-    title: 'Homecoming of the Heart',
-    swahili: 'Ninakusihi, Asia, tusimame tena katika mwanga wa msamaha.',
-    subtitle: 'We can learn to breathe together again, to trust the dawn we once shared.',
-    body: `If you can hear this prayer carried on monsoon winds, know that my hands are open.
-I am ready to listen, to hold the softest parts of your heart with reverence.`,
+    id: 'kusikiliza',
+    title: 'Sitaki Kukata Tena',
+    swahili: 'Nitakusikiliza kwa subira yote, hata kama makosa yangu yatachoma.',
+    subtitle: 'Saute yako ndiyo dira yangu; naja kwako nikiwa mtulivu, nikiwa tayari kupokea kila neno.',
+    body: `Nitaweka chini sauti yangu, nitazima kelele za nje, na nitahifadhi kila pumzi utakayoitoa.
+Mapigo yangu yatangoja ruhusa yako kabla ya kukukaribia, kwa sababu najua heshima huanza kwa kusikia.`,
+    variant: 'love',
+    icon: IconHandsTogether,
+  },
+  {
+    id: 'msamaha',
+    title: 'Safari ya Msamaha',
+    swahili: 'Naomba msamaha, si kama haki, bali kama zawadi utakayotamani kutoa.',
+    subtitle: 'Nataka tujenge utulivu mpya, wenye mizizi ya uaminifu na uhai wa matumaini mapya.',
+    body: `Nitashona pengo niliotengeneza kwa vitendo vya upole kila siku.
+Nikikumbatia mwanga wa kesho kutwa, ninashikilia imani kuwa tukikumbatia msamaha, tutatengeneza dunia yetu upya.`,
     variant: 'forgiveness',
+    icon: IconOliveBranch,
+  },
+];
+
+const gestures = [
+  {
+    id: 'kusikiza',
+    title: 'Nitakusikiliza mwisho',
+    detail: 'Hakuna kukatiza, hakuna kujitetea—masikio yangu yatakuwa mapana kama anga ya jioni.',
+    icon: IconHandsTogether,
+  },
+  {
+    id: 'kulinda',
+    title: 'Nitailinda sauti yako',
+    detail: 'Nitahifadhi mipaka yako na kuilinda hadithi yako kama zawadi ninayokabidhiwa.',
+    icon: IconSparkPrayer,
+  },
+  {
+    id: 'kujifunza',
+    title: 'Nitajifunza kila siku',
+    detail: 'Nitafuatilia tiba, vitabu, na mazungumzo yatakayonionyesha namna bora ya kukupenda.',
+    icon: IconHeartOpen,
+  },
+  {
+    id: 'kuponya',
+    title: 'Nitafanya makazi kuwa laini',
+    detail: 'Nyumba yetu itakuwa hema la amani—hakuna shinikizo, ni pumzi yako ndiyo kipaumbele.',
+    icon: IconOliveBranch,
   },
 ];
 
@@ -60,32 +136,70 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.2, ease: 'easeOut' }}
           >
-            An immersive letter of love, regret, and hope—woven through light, sound, and motion. Safari hii ya hisia
-            inatembea kupitia kumbukumbu zetu, ikitafuta msamaha wako wa thamani.
+            Barua hii ya msamaha ni pumzi iliyojaa upendo, majuto, na matumaini mapya. Najua niko vibaya, na ninainama
+            mbele yako nikikuomba unisikilize tena.
           </motion.p>
           <motion.div
-            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 shadow-xl max-w-2xl"
+            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 shadow-xl max-w-3xl space-y-4"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.4, ease: 'easeOut' }}
           >
-            <p className="text-sm uppercase tracking-[0.3em] text-slate-300 mb-4">Soundtrack</p>
-            <p className="text-slate-100 mb-4">
-              Press play and let the melody carry these words to you. <span className="italic">Cheza wimbo huu, usikie moyo
-              wangu ukiongea.</span>
+            <p className="text-sm uppercase tracking-[0.3em] text-slate-300">Tamko la Msamaha</p>
+            <p className="text-slate-100 text-lg">
+              Ninapumua neno moja tu: <span className="text-blush font-semibold">samahani</span>. Najua nilivunja utulivu wako, najua najikuta
+              nikiomba mlango wa kurudi. Nataka maneno haya yawe mwanzo wa uponyaji, si kumbukumbu ya maumivu.
             </p>
-            <audio
-              controls
-              className="w-full"
-              src="https://cdn.pixabay.com/download/audio/2023/03/01/audio_4cff8b6b5c.mp3?filename=calm-piano-144998.mp3"
-            >
-              Your browser does not support the audio element.
-            </audio>
+          </motion.div>
+          <motion.div
+            className="grid w-full max-w-4xl grid-cols-1 sm:grid-cols-2 gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ staggerChildren: 0.1 }}
+          >
+            {gestures.slice(0, 2).map((gesture, idx) => {
+              const Icon = gesture.icon;
+              return (
+                <motion.div
+                  key={gesture.id}
+                  variants={textVariants}
+                  custom={idx}
+                  className="rounded-2xl border border-white/10 bg-black/30 backdrop-blur p-5 flex flex-col items-center gap-3"
+                >
+                  <Icon className="w-12 h-12 text-blush drop-shadow-[0_0_12px_rgba(244,114,182,0.6)]" />
+                  <h3 className="font-semibold text-lg">{gesture.title}</h3>
+                  <p className="text-slate-300 text-sm">{gesture.detail}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </header>
 
       <main className="relative space-y-24 pb-24">
+        <section className="relative max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {gestures.map((gesture) => {
+              const Icon = gesture.icon;
+              return (
+                <motion.div
+                  key={gesture.id}
+                  className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-lg p-6 flex flex-col gap-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                >
+                  <Icon className="w-10 h-10 text-blush" />
+                  <h3 className="font-semibold">{gesture.title}</h3>
+                  <p className="text-sm text-slate-300">{gesture.detail}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
         {storyBeats.map((beat, index) => (
           <section key={beat.id} className="relative">
             <div className="absolute inset-0 blur-3xl opacity-30" aria-hidden>
@@ -107,12 +221,12 @@ export default function App() {
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ staggerChildren: 0.12 }}
               >
-                <motion.span
-                  className="text-sm uppercase tracking-[0.4em] text-slate-300"
-                  variants={textVariants}
-                >
-                  {`Chapter ${index + 1}`}
-                </motion.span>
+                <motion.div className="flex items-center gap-3" variants={textVariants}>
+                  {beat.icon && (
+                    <beat.icon className="w-10 h-10 text-blush drop-shadow-[0_0_12px_rgba(244,114,182,0.6)]" />
+                  )}
+                  <span className="text-xs uppercase tracking-[0.4em] text-slate-300">{`Sura ${index + 1}`}</span>
+                </motion.div>
                 <motion.h2
                   className="font-display text-3xl sm:text-4xl text-white"
                   variants={textVariants}
@@ -148,7 +262,7 @@ export default function App() {
       </main>
 
       <footer className="py-16 text-center text-slate-400 text-sm">
-        <p>Imeandikwa kwa upendo, kwa matumaini ya msamaha. — Naomba unitazame tena, Asia.</p>
+        <p>Ninaomba msamaha wako kwa unyenyekevu na matumaini. - Nitathibitisha kwa vitendo, kila siku.</p>
       </footer>
     </div>
   );
