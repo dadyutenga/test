@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: theme('fontFamily.sans');
+  background: radial-gradient(circle at top, rgba(244, 114, 182, 0.2), rgba(15, 23, 42, 1));
+  min-height: 100vh;
+}
+
+audio::-webkit-media-controls-panel {
+  background: rgba(15, 23, 42, 0.7);
+}
