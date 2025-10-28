@@ -9,7 +9,7 @@ export default function EmotionCanvas({ variant }) {
   }, []);
 
   return (
-    <div className="h-[400px] sm:h-[480px] lg:h-[560px] w-full">
+    <div className="h-[300px] sm:h-[420px] lg:h-[560px] w-full">
       <Canvas camera={{ position: [0, 0, 8], fov: 45 }} gl={{ antialias: true }} dpr={dpr}>
         <color attach="background" args={[variant === 'regret' ? '#0b1120' : '#0f172a']} />
         <Suspense fallback={null}>
