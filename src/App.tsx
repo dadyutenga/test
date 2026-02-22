@@ -6,6 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/admin/Login";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import ProjectsAdmin from "./pages/admin/ProjectsAdmin";
+import ServicesAdmin from "./pages/admin/ServicesAdmin";
+import ContactAdmin from "./pages/admin/ContactAdmin";
+import MessagesAdmin from "./pages/admin/MessagesAdmin";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +26,14 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="projects" element={<ProjectsAdmin />} />
+              <Route path="services" element={<ServicesAdmin />} />
+              <Route path="contact" element={<ContactAdmin />} />
+              <Route path="messages" element={<MessagesAdmin />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

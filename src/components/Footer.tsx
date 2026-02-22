@@ -1,55 +1,122 @@
-import { Mail, Phone, MapPin, MessageCircle, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Mail, Phone, MapPin, MessageCircle, Send } from "lucide-react";
 import logo from "@/assets/logo.jpeg";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useContactInfo, useSubmitMessage } from "@/hooks/use-contact";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   const { t } = useLanguage();
+  const { data: contact } = useContactInfo();
+  const submitMutation = useSubmitMessage();
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
+
+  const phone = contact?.phone || "";
+  const contactEmail = contact?.email || "";
+  const whatsapp = contact?.whatsapp || "";
+  const address = contact?.address || "";
+  const phoneLink = phone.replace(/\s/g, "");
+  const whatsappNum = whatsapp.replace(/[\s+]/g, "");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await submitMutation.mutateAsync(formData);
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
+  };
 
   return (
     <footer id="contact">
       {/* Get In Touch Section */}
       <div className="bg-primary text-primary-foreground">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">{t("getInTouch")}</h2>
               <p className="text-primary-foreground/70 font-body text-base leading-relaxed mb-8">
                 {t("getInTouchDesc")}
               </p>
               <div className="space-y-4">
-                <a href="tel:+255620569000" className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors font-body">
-                  <Phone size={18} className="text-accent" />
-                  +255 620 569 000
-                </a>
-                <a href="mailto:priscaezekiel7@gmail.com" className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors font-body">
-                  <Mail size={18} className="text-accent" />
-                  priscaezekiel7@gmail.com
-                </a>
-                <a
-                  href="https://wa.me/255620569000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors font-body"
-                >
-                  <MessageCircle size={18} className="text-accent" />
-                  WhatsApp: +255 620 569 000
-                </a>
-                <div className="flex items-start gap-3 text-primary-foreground/80 font-body">
-                  <MapPin size={18} className="text-accent shrink-0 mt-0.5" />
-                  Dar es Salaam, Tanzania
-                </div>
+                {phone && (
+                  <a href={`tel:${phoneLink}`} className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors font-body">
+                    <Phone size={18} className="text-accent" />
+                    {phone}
+                  </a>
+                )}
+                {contactEmail && (
+                  <a href={`mailto:${contactEmail}`} className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors font-body">
+                    <Mail size={18} className="text-accent" />
+                    {contactEmail}
+                  </a>
+                )}
+                {whatsapp && (
+                  <a
+                    href={`https://wa.me/${whatsappNum}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors font-body"
+                  >
+                    <MessageCircle size={18} className="text-accent" />
+                    WhatsApp: {whatsapp}
+                  </a>
+                )}
+                {address && (
+                  <div className="flex items-start gap-3 text-primary-foreground/80 font-body">
+                    <MapPin size={18} className="text-accent shrink-0 mt-0.5" />
+                    {address}
+                  </div>
+                )}
               </div>
             </div>
-            <div className="flex justify-center">
-              <a
-                href="https://wa.me/255620569000"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-accent text-accent-foreground font-body font-semibold px-10 py-4 text-sm tracking-wide rounded-full hover:opacity-90 transition-opacity shadow-lg"
-              >
-                <MessageCircle size={20} />
-                Chat on WhatsApp <ArrowRight size={18} />
-              </a>
+            <div>
+              <h3 className="font-display text-xl font-bold mb-4">Send us a Message</h3>
+              {submitted ? (
+                <p className="text-accent font-body text-sm py-8">Thank you! Your message has been sent.</p>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <Input
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
+                    required
+                    className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Your email"
+                    value={formData.email}
+                    onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
+                    required
+                    className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40"
+                  />
+                  <Input
+                    placeholder="Subject (optional)"
+                    value={formData.subject}
+                    onChange={(e) => setFormData((p) => ({ ...p, subject: e.target.value }))}
+                    className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40"
+                  />
+                  <Textarea
+                    placeholder="Your message"
+                    value={formData.message}
+                    onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
+                    required
+                    rows={3}
+                    className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={submitMutation.isPending}
+                    className="bg-accent text-accent-foreground hover:bg-accent/90 gap-2"
+                  >
+                    <Send size={16} />
+                    {submitMutation.isPending ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+              )}
             </div>
           </div>
         </div>
@@ -96,22 +163,28 @@ const Footer = () => {
             <div>
               <h4 className="font-display text-lg font-bold mb-6">{t("contactUs")}</h4>
               <ul className="space-y-3 font-body text-sm">
-                <li>
-                  <a href="mailto:priscaezekiel7@gmail.com" className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
-                    priscaezekiel7@gmail.com
-                  </a>
-                </li>
-                <li>
-                  <a href="tel:+255620569000" className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
-                    +255 620 569 000
-                  </a>
-                </li>
-                <li>
-                  <a href="https://wa.me/255620569000" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
-                    WhatsApp: +255 620 569 000
-                  </a>
-                </li>
-                <li className="text-primary-foreground/60">Dar es Salaam, Tanzania</li>
+                {contactEmail && (
+                  <li>
+                    <a href={`mailto:${contactEmail}`} className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+                      {contactEmail}
+                    </a>
+                  </li>
+                )}
+                {phone && (
+                  <li>
+                    <a href={`tel:${phoneLink}`} className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+                      {phone}
+                    </a>
+                  </li>
+                )}
+                {whatsapp && (
+                  <li>
+                    <a href={`https://wa.me/${whatsappNum}`} target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+                      WhatsApp: {whatsapp}
+                    </a>
+                  </li>
+                )}
+                {address && <li className="text-primary-foreground/60">{address}</li>}
               </ul>
             </div>
           </div>
