@@ -9,9 +9,7 @@ const ServicesSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [openService, setOpenService] = useState<number | null>(null);
   const { t } = useLanguage();
-  const { data: services } = useServices();
-
-  if (!services) return null;
+  const { data: services, isLoading, error, refetch } = useServices();
 
   return (
     <section id="services" className="section-padding bg-muted" ref={ref}>
@@ -28,8 +26,27 @@ const ServicesSection = () => {
           </h2>
         </motion.div>
 
+        {isLoading && (
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-destructive font-body mb-4">Failed to load services</p>
+            <button onClick={() => refetch()} className="bg-primary text-primary-foreground px-6 py-2 rounded-full font-body text-sm hover:opacity-90 transition-opacity">
+              Retry
+            </button>
+          </div>
+        )}
+
+        {!isLoading && !error && services && services.length === 0 && (
+          <p className="text-center text-muted-foreground font-body py-12">No services yet.</p>
+        )}
+
         <div className="grid md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {(services ?? []).map((service, index) => (
             <motion.div
               key={service.id}
               initial={{ opacity: 0, y: 40 }}
@@ -59,7 +76,7 @@ const ServicesSection = () => {
       </div>
 
       <AnimatePresence>
-        {openService !== null && services[openService] && (
+        {openService !== null && services?.[openService] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -1,73 +1,78 @@
-# Welcome to your Lovable project
+# GreenScape Consults Tz Ltd
 
-## Project info
+A full-stack portfolio and CMS application for GreenScape Consults — a landscape architecture, building construction, and project management company based in Dar es Salaam, Tanzania.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Tech Stack
 
-## How can I edit this code?
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui, Framer Motion
+- **Backend:** Express.js, better-sqlite3
+- **Auth:** JWT + bcrypt
 
-There are several ways of editing your application.
+## Prerequisites
 
-**Use Lovable**
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- npm
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting Started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# 1. Clone the repository
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 2. Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 3. Seed the database (creates admin user + sample data)
+npm run seed
+
+# 4. Start both frontend and backend in development mode
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+This starts:
+- **Frontend (Vite):** http://localhost:8080
+- **Backend (Express):** http://localhost:3001
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Available Scripts
 
-**Use GitHub Codespaces**
+| Command | Description |
+|---|---|
+| `npm run dev` | Start frontend + backend concurrently |
+| `npm run dev:client` | Start only the Vite frontend |
+| `npm run dev:server` | Start only the Express backend |
+| `npm run build` | Build the frontend for production |
+| `npm start` | Run the production server (serves built frontend + API) |
+| `npm run seed` | Seed the database with initial data |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run tests |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Default Admin Credentials
 
-## What technologies are used for this project?
+After seeding, you can log in to the admin panel at `/admin/login`:
 
-This project is built with:
+- **Username:** `admin`
+- **Password:** `admin123`
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Project Structure
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```
+├── server/             # Express backend
+│   ├── index.ts        # Server entry point
+│   ├── database.ts     # SQLite database setup
+│   ├── seed.ts         # Database seeding script
+│   ├── middleware/      # Auth middleware
+│   ├── repositories/   # Database access layer
+│   ├── routes/         # API routes
+│   ├── data/           # SQLite database files
+│   └── media/          # Uploaded media files
+├── src/                # React frontend
+│   ├── components/     # UI components
+│   ├── pages/          # Page components (Index, Admin)
+│   ├── contexts/       # React contexts (Language)
+│   ├── core/api/       # API client functions
+│   ├── hooks/          # Custom hooks
+│   ├── lib/            # Utility functions
+│   └── types/          # TypeScript types
+└── public/             # Static assets
+```

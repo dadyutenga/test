@@ -9,9 +9,7 @@ const ProjectsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [openProject, setOpenProject] = useState<number | null>(null);
   const { t } = useLanguage();
-  const { data: projects } = useProjects();
-
-  if (!projects) return null;
+  const { data: projects, isLoading, error, refetch } = useProjects();
 
   return (
     <section id="projects" className="section-padding bg-background" ref={ref}>
@@ -30,8 +28,27 @@ const ProjectsSection = () => {
           </div>
         </motion.div>
 
+        {isLoading && (
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-destructive font-body mb-4">Failed to load projects</p>
+            <button onClick={() => refetch()} className="bg-primary text-primary-foreground px-6 py-2 rounded-full font-body text-sm hover:opacity-90 transition-opacity">
+              Retry
+            </button>
+          </div>
+        )}
+
+        {!isLoading && !error && projects && projects.length === 0 && (
+          <p className="text-center text-muted-foreground font-body py-12">No projects yet.</p>
+        )}
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+          {(projects ?? []).map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 40 }}
@@ -68,7 +85,7 @@ const ProjectsSection = () => {
       </div>
 
       <AnimatePresence>
-        {openProject !== null && projects[openProject] && (
+        {openProject !== null && projects?.[openProject] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
