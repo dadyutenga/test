@@ -26,6 +26,9 @@ npm install
 # 3. Seed the database (creates admin user + sample data)
 npm run seed
 
+# (Optional) Set a custom admin password during seeding
+ADMIN_PASSWORD=your_secure_password npm run seed
+
 # 4. Start both frontend and backend in development mode
 npm run dev
 ```
@@ -47,12 +50,34 @@ This starts:
 | `npm run lint` | Run ESLint |
 | `npm test` | Run tests |
 
+## Environment Variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `ADMIN_PASSWORD` | `admin123` | Admin password used during seeding. Set before running `npm run seed`. |
+| `JWT_SECRET` | `greenscape-cms-secret-2026` | Secret key for signing JWT tokens. |
+| `PORT` | `3001` | Backend server port. |
+
+> **Warning:** If `ADMIN_PASSWORD` is not set, the seed script falls back to `admin123` and prints a warning. Change it in production.
+
 ## Default Admin Credentials
 
 After seeding, you can log in to the admin panel at `/admin/login`:
 
 - **Username:** `admin`
-- **Password:** `admin123`
+- **Password:** `admin123` (or whatever you set via `ADMIN_PASSWORD`)
+
+You can change the password at any time from **Admin → Settings**.
+
+## Admin Panel Features
+
+- **Dashboard** — Overview of site content
+- **Projects** — CRUD for portfolio projects and their steps
+- **Services** — CRUD for service categories and items
+- **Testimonials** — CRUD for client testimonials (with image upload)
+- **Contact Info** — Update company contact details
+- **Messages** — View contact form submissions
+- **Settings** — Change admin password
 
 ## Project Structure
 
