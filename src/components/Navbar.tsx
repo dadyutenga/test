@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Globe, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.jpeg";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -15,6 +16,7 @@ const Navbar = () => {
     { label: t("services"), href: "#services" },
     { label: t("projects"), href: "#projects" },
     { label: t("contact"), href: "#contact" },
+    { label: "Admin", href: "/admin/login", isRoute: true },
   ];
 
   return (
@@ -35,12 +37,21 @@ const Navbar = () => {
           <ul className="flex items-center gap-6">
             {navItems.map((item) => (
               <li key={item.label}>
-                <a
-                  href={item.href}
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </a>
+                {item.isRoute ? (
+                  <Link
+                    to={item.href}
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    href={item.href}
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -102,13 +113,23 @@ const Navbar = () => {
             <ul className="flex flex-col px-6 py-4 gap-4">
               {navItems.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-base font-medium text-foreground hover:text-primary transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.label}
-                  </a>
+                  {item.isRoute ? (
+                    <Link
+                      to={item.href}
+                      className="text-base font-medium text-foreground hover:text-primary transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="text-base font-medium text-foreground hover:text-primary transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  )}
                 </li>
               ))}
               {/* Mobile language selector */}
