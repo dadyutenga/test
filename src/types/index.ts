@@ -103,3 +103,27 @@ export interface CreateMessagePayload {
   subject?: string;
   message: string;
 }
+
+export interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  text: string;
+  image: string;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface CreateTestimonialPayload {
+  name: string;
+  role: string;
+  text: string;
+  image?: string;
+}
+
+export interface UpdateTestimonialPayload {
+  name?: string;
+  role?: string;
+  text?: string;
+  image?: string;
+}

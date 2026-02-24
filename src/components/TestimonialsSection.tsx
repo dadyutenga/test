@@ -2,22 +2,35 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTestimonials } from "@/hooks/use-testimonials";
 
-const testimonials = [
+const fallbackTestimonials = [
   {
+    id: 0,
     name: "James Mwangi",
     role: "Property Developer",
     text: "GreenScape transformed our commercial property into a stunning green oasis. Their attention to detail and sustainable approach exceeded all expectations.",
+    image: "",
+    sort_order: 0,
+    created_at: "",
   },
   {
+    id: 0,
     name: "Amina Hassan",
     role: "Homeowner",
     text: "From the initial design to the final planting, the team was professional, creative, and a joy to work with. Our garden is now the highlight of the neighbourhood.",
+    image: "",
+    sort_order: 0,
+    created_at: "",
   },
   {
+    id: 0,
     name: "David Kimaro",
     role: "Hotel Manager",
     text: "The landscape design for our resort was exceptional. Guests constantly compliment the beautiful outdoor spaces that GreenScape created for us.",
+    image: "",
+    sort_order: 0,
+    created_at: "",
   },
 ];
 
@@ -26,6 +39,9 @@ const TestimonialsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [current, setCurrent] = useState(0);
   const { t } = useLanguage();
+  const { data } = useTestimonials();
+
+  const testimonials = data && data.length > 0 ? data : fallbackTestimonials;
 
   const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
   const next = () => setCurrent((c) => (c + 1) % testimonials.length);
@@ -55,6 +71,13 @@ const TestimonialsSection = () => {
           <p className="text-muted-foreground font-body text-lg leading-relaxed mb-8 italic">
             "{testimonials[current].text}"
           </p>
+          {testimonials[current].image && (
+            <img
+              src={testimonials[current].image}
+              alt={testimonials[current].name}
+              className="w-16 h-16 rounded-full object-cover mx-auto mb-3"
+            />
+          )}
           <p className="font-display text-xl font-bold text-foreground">{testimonials[current].name}</p>
           <p className="text-sm text-primary font-body">{testimonials[current].role}</p>
 

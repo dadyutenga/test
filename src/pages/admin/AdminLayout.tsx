@@ -6,6 +6,7 @@ import {
   Wrench,
   Phone,
   MessageSquare,
+  Quote,
   LogOut,
 } from "lucide-react";
 import { clearToken } from "@/core/api/client";
@@ -17,6 +18,7 @@ const navItems = [
   { to: "/admin/services", icon: Wrench, label: "Services", end: false },
   { to: "/admin/contact", icon: Phone, label: "Contact Info", end: false },
   { to: "/admin/messages", icon: MessageSquare, label: "Messages", end: false },
+  { to: "/admin/testimonials", icon: Quote, label: "Testimonials", end: false },
 ];
 
 export default function AdminLayout() {

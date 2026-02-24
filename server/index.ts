@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.routes.js";
 import projectRoutes from "./routes/project.routes.js";
 import serviceRoutes from "./routes/service.routes.js";
 import contactRoutes from "./routes/contact.routes.js";
+import testimonialRoutes from "./routes/testimonial.routes.js";
 import mediaRoutes from "./routes/media.routes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/upload", mediaRoutes);
 app.use("/media", express.static(MEDIA_DIR));
 

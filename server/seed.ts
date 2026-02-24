@@ -4,6 +4,7 @@ import { createUser, hasUsers } from "./repositories/user.repository.js";
 import * as projectRepo from "./repositories/project.repository.js";
 import * as serviceRepo from "./repositories/service.repository.js";
 import { getContactInfo, updateContactInfo } from "./repositories/contact.repository.js";
+import * as testimonialRepo from "./repositories/testimonial.repository.js";
 
 if (!hasUsers()) {
   const hash = bcrypt.hashSync("admin123", 10);
@@ -111,6 +112,26 @@ if (!contact.phone) {
     address: "Dar es Salaam, Tanzania",
   });
   console.log("Seeded contact info");
+}
+
+const existingTestimonials = testimonialRepo.findAll();
+if (existingTestimonials.length === 0) {
+  testimonialRepo.create({
+    name: "James Mwangi",
+    role: "Property Developer",
+    text: "GreenScape transformed our commercial property into a stunning green oasis. Their attention to detail and sustainable approach exceeded all expectations.",
+  });
+  testimonialRepo.create({
+    name: "Amina Hassan",
+    role: "Homeowner",
+    text: "From the initial design to the final planting, the team was professional, creative, and a joy to work with. Our garden is now the highlight of the neighbourhood.",
+  });
+  testimonialRepo.create({
+    name: "David Kimaro",
+    role: "Hotel Manager",
+    text: "The landscape design for our resort was exceptional. Guests constantly compliment the beautiful outdoor spaces that GreenScape created for us.",
+  });
+  console.log("Seeded 3 testimonials");
 }
 
 console.log("Seed complete.");
