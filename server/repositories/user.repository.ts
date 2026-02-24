@@ -18,3 +18,11 @@ export function createUser(username: string, passwordHash: string): void {
 export function hasUsers(): boolean {
   return (db.prepare("SELECT COUNT(*) as count FROM users").get() as { count: number }).count > 0;
 }
+
+export function findById(id: number): UserRow | undefined {
+  return db.prepare("SELECT * FROM users WHERE id = ?").get(id) as UserRow | undefined;
+}
+
+export function updatePassword(id: number, passwordHash: string): boolean {
+  return db.prepare("UPDATE users SET password_hash = ? WHERE id = ?").run(passwordHash, id).changes > 0;
+}

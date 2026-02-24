@@ -7,9 +7,10 @@ import { getContactInfo, updateContactInfo } from "./repositories/contact.reposi
 import * as testimonialRepo from "./repositories/testimonial.repository.js";
 
 if (!hasUsers()) {
-  const hash = bcrypt.hashSync("admin123", 10);
+  const defaultPassword = process.env.ADMIN_PASSWORD || "admin123";
+  const hash = bcrypt.hashSync(defaultPassword, 10);
   createUser("admin", hash);
-  console.log("Created admin user: admin / admin123");
+  console.log(`Created admin user: admin / ${defaultPassword === "admin123" ? "admin123 (change this after first login!)" : "[custom password]"}`);
 }
 
 const existingProjects = projectRepo.findAll();
